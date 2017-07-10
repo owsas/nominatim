@@ -1,0 +1,40 @@
+{
+  "name": "nominatim-js",
+  "version": "1.0.0",
+  "description": "Unofficial JS SDK for the Nominatim Open Street Map service that allows geocoding and reverse geocoding",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/owsas/nominatim.git"
+  },
+  "keywords": [
+    "nominatim",
+    "otherwise",
+    "geocoding",
+    "reverse",
+    "geocoding",
+    "osm",
+    "open",
+    "street",
+    "map"
+  ],
+  "author": "Otherwise SAS",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/owsas/nominatim/issues"
+  },
+  "homepage": "https://github.com/owsas/nominatim#readme",
+  "dependencies": {
+    "superagent": "^3.5.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^20.0.2",
+    "@types/superagent": "^3.5.2",
+    "jest": "^20.0.4",
+    "ts-jest": "^20.0.7",
+    "typescript": "^2.4.1"
+  }
+}
