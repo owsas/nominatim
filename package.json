@@ -29,13 +29,13 @@
   },
   "homepage": "https://github.com/owsas/nominatim#readme",
   "dependencies": {
-    "superagent": "^3.5.2"
+    "superagent": "^3.8.3"
   },
   "devDependencies": {
-    "@types/jest": "^20.0.2",
-    "@types/superagent": "^3.5.2",
-    "jest": "^20.0.4",
-    "ts-jest": "^20.0.7",
-    "typescript": "^2.4.1"
+    "@types/jest": "^23.1.5",
+    "@types/superagent": "^3.8.2",
+    "jest": "^23.4.0",
+    "ts-jest": "^23.0.0",
+    "typescript": "^2.9.2"
   }
 }
