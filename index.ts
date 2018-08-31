@@ -71,7 +71,7 @@ export class NominatimJS {
     }
 
     return await superagent
-      .get('http://nominatim.openstreetmap.org/search')
+      .get('https://nominatim.openstreetmap.org/search')
       .query(params)
       .then(res => res.body || []);
   }

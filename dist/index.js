@@ -14,8 +14,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
         while (_) try {
-            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [0, t.value];
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
                 case 0: case 1: t = op; break;
                 case 4: _.label++; return { value: op[1], done: false };
@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var superagent = require("superagent");
-var NominatimJS = (function () {
+var NominatimJS = /** @class */ (function () {
     function NominatimJS() {
     }
     NominatimJS.search = function (params) {
@@ -54,7 +54,7 @@ var NominatimJS = (function () {
                             params['accept-language'] = params.accept_language;
                         }
                         return [4 /*yield*/, superagent
-                                .get('http://nominatim.openstreetmap.org/search')
+                                .get('https://nominatim.openstreetmap.org/search')
                                 .query(params)
                                 .then(function (res) { return res.body || []; })];
                     case 1: return [2 /*return*/, _a.sent()];
