@@ -56,7 +56,7 @@ export interface IAddress {
 export interface ISearchResult {
   place_id: string
   osm_id: string
-  osm_type: string
+  osm_type: PlaceTypeLabel
   boundingbox?: string[4]
   lat: string
   lng: string
@@ -70,8 +70,19 @@ export interface ISearchResult {
   svg?: string
 }
 
+
+const PLACES_TYPES = {
+  node: "N" as "N",
+  way: "W" as "W",
+  relation: "R" as "R"
+};
+
+type Places = typeof PLACES_TYPES;
+type PlaceTypeLabel = keyof Places;
+type PlaceTypeId = Places[PlaceTypeLabel];
+
 export interface IOsmId {
-  type: 'node' | 'way' | 'relation'
+  type: PlaceTypeLabel
   id: number
 }
 
@@ -88,14 +99,8 @@ export class NominatimJS {
     };
   }
 
-  private static PLACES_TYPES = {
-    node: 'N',
-    way: 'W',
-    relation: 'R'
-  };
-
   private static stringifyOsmId (osmId: IOsmId): string {
-    return `${NominatimJS.PLACES_TYPES[osmId.type]}${osmId.id}`;
+    return `${PLACES_TYPES[osmId.type]}${osmId.id}`;
   }
 
   public static async search(rawParams: ISearchParams): Promise<ISearchResult[]> {
@@ -107,7 +112,7 @@ export class NominatimJS {
         ...params,
         countrycodes: params.countrycodes || (params.countryCodesArray ? params.countryCodesArray.join(',') : undefined)
       })
-      .then(res => res.body || []);
+      .then((res: superagent.Response) => res.body || []);
   }
 
   public static async lookup(osmIds: IOsmId[], rawParams: ILookupParams): Promise<ISearchResult[]> {
@@ -119,7 +124,7 @@ export class NominatimJS {
         ...params,
         osm_ids: osmIds.map(NominatimJS.stringifyOsmId).join(',')
       })
-      .then(res => res.body || [])
+      .then((res: superagent.Response) => res.body || [])
   }
 
 }

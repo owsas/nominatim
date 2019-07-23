@@ -47,6 +47,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var superagent = require("superagent");
+var PLACES_TYPES = {
+    node: "N",
+    way: "W",
+    relation: "R"
+};
 var NominatimJS = /** @class */ (function () {
     function NominatimJS() {
     }
@@ -54,7 +59,7 @@ var NominatimJS = /** @class */ (function () {
         return __assign({}, params, { format: params.format || 'json', "accept-language": params["accept-language"] || params.accept_language });
     };
     NominatimJS.stringifyOsmId = function (osmId) {
-        return "" + NominatimJS.PLACES_TYPES[osmId.type] + osmId.id;
+        return "" + PLACES_TYPES[osmId.type] + osmId.id;
     };
     NominatimJS.search = function (rawParams) {
         return __awaiter(this, void 0, void 0, function () {
@@ -89,11 +94,6 @@ var NominatimJS = /** @class */ (function () {
         });
     };
     NominatimJS.NOMINATIM_ENDPOINT = 'https://nominatim.openstreetmap.org/';
-    NominatimJS.PLACES_TYPES = {
-        node: 'N',
-        way: 'W',
-        relation: 'R'
-    };
     return NominatimJS;
 }());
 exports.NominatimJS = NominatimJS;

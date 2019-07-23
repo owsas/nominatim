@@ -50,7 +50,7 @@ export interface IAddress {
 export interface ISearchResult {
     place_id: string;
     osm_id: string;
-    osm_type: string;
+    osm_type: PlaceTypeLabel;
     boundingbox?: string[4];
     lat: string;
     lng: string;
@@ -63,8 +63,15 @@ export interface ISearchResult {
     licence: string;
     svg?: string;
 }
+declare const PLACES_TYPES: {
+    node: "N";
+    way: "W";
+    relation: "R";
+};
+declare type Places = typeof PLACES_TYPES;
+declare type PlaceTypeLabel = keyof Places;
 export interface IOsmId {
-    type: 'node' | 'way' | 'relation';
+    type: PlaceTypeLabel;
     id: number;
 }
 export interface ILookupParams extends ICommonParams {
@@ -72,7 +79,6 @@ export interface ILookupParams extends ICommonParams {
 export declare class NominatimJS {
     private static NOMINATIM_ENDPOINT;
     private static normalizeParams;
-    private static PLACES_TYPES;
     private static stringifyOsmId;
     static search(rawParams: ISearchParams): Promise<ISearchResult[]>;
     static lookup(osmIds: IOsmId[], rawParams: ILookupParams): Promise<ISearchResult[]>;
