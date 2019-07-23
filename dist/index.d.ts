@@ -1,8 +1,15 @@
-export interface INominatimParams {
+interface ICommonParams {
     format?: 'html' | 'json' | 'xml' | 'jsonv2';
     json_callback?: string;
     accept_language?: string;
     'accept-language'?: string;
+    addressdetails?: 0 | 1;
+    extratags?: 0 | 1;
+    namedetails?: 0 | 1;
+    email?: string;
+    debug?: 0 | 1;
+}
+export interface ISearchParams extends ICommonParams {
     q: string;
     street?: string;
     city?: string;
@@ -14,13 +21,33 @@ export interface INominatimParams {
     countrycodes?: string;
     bounded?: 0 | 1;
     polygon?: 0 | 1;
-    addressdetails?: 0 | 1;
     email?: string;
     exclude_place_ids?: string;
     limit?: number;
     dedupe?: 0 | 1;
 }
-export interface INominatimResult {
+export interface IAddress {
+    house_number?: string;
+    road?: string;
+    neighbourhood?: string;
+    suburb?: string;
+    postcode?: string;
+    city: string;
+    city_district?: string;
+    county?: string;
+    state: string;
+    country: string;
+    country_code: string;
+    continent?: string;
+    public_building?: string;
+    attraction?: string;
+    pedestrian?: string;
+    peak?: string;
+    bakery?: string;
+    electronics?: string;
+    construction?: string;
+}
+export interface ISearchResult {
     place_id: string;
     osm_id: string;
     osm_type: string;
@@ -32,23 +59,22 @@ export interface INominatimResult {
     type: string;
     importance: number;
     icon: string;
-    address: {
-        house_number?: string;
-        road?: string;
-        neighbourhood?: string;
-        suburb?: string;
-        city_district?: string;
-        city: string;
-        county?: string;
-        state: string;
-        country: string;
-        country_code: string;
-        postcode?: string;
-        peak?: string;
-        bakery?: string;
-        electronics?: string;
-    };
+    address: IAddress;
+    licence: string;
+    svg?: string;
+}
+export interface IOsmId {
+    type: 'node' | 'way' | 'relation';
+    id: number;
+}
+export interface ILookupParams extends ICommonParams {
 }
 export declare class NominatimJS {
-    static search(params: INominatimParams): Promise<INominatimResult[]>;
+    private static NOMINATIM_ENDPOINT;
+    private static normalizeParams;
+    private static PLACES_TYPES;
+    private static stringifyOsmId;
+    static search(rawParams: ISearchParams): Promise<ISearchResult[]>;
+    static lookup(osmIds: IOsmId[], rawParams: ILookupParams): Promise<ISearchResult[]>;
 }
+export {};
