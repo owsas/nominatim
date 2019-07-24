@@ -63,6 +63,7 @@ export interface ISearchResult {
     licence: string;
     svg?: string;
 }
+export declare type INominatimResult = ISearchResult;
 declare const PLACES_TYPES: {
     node: "N";
     way: "W";

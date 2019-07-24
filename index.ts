@@ -70,6 +70,8 @@ export interface ISearchResult {
   svg?: string
 }
 
+// For backward compatibility
+export type INominatimResult = ISearchResult;
 
 const PLACES_TYPES = {
   node: "N" as "N",
