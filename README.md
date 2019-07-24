@@ -1,5 +1,7 @@
 # Nominatim-JS
 
+![build](https://travis-ci.com/owsas/nominatim.svg?branch=master)
+
 Unofficial JS SDK for the Nominatim Open Street Map service that allows geocoding and reverse geocoding
 
 ## How to use?
