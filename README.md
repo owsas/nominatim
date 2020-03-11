@@ -11,11 +11,15 @@ $> npm install --save nominatim-JS
 
 Then, use it :). It works with Promises, or can be used with async / await.
 
+```js
+const { NominatimJS } = require('nominatim-js');
+```
+
+## Search
+
 ### Example with promises
 
 ```js
-const { NominatimJS } = require('nominatim-js');
-
 NominatimJS.search({
   q: 'bakery in new york'
 }).then(results => {
@@ -23,14 +27,11 @@ NominatimJS.search({
 }).catch(error => {
   // error ocurred
 })
-
 ```
 
 ### Example with async / await
 
 ```js
-const { NominatimJS } = require('nominatim-js');
-
 async function search(){
   let results = await NominatimJS.search({
     q: 'bakery in new york'
@@ -39,8 +40,43 @@ async function search(){
 ```
 NOTE: To await the response, the call to the API must be written inside an async function
 
+## Lookup
 
-### More examples 
+First parameter is an array of OSM ids with types. Type can be one of `way`, `node` or `relation`.
+
+Second parameter is optional params.  
+
+### Example with promises
+
+```js
+NominatimJS.lookup([{ type: "way", id: 163993703}])
+  .then(results => {
+    // do something with results
+  })
+  .catch(error => {
+    // error ocurred
+  })
+
+```
+
+### Example with async / await
+
+```js
+const results = await NominatimJS.lookup([{ type: "way", id: 163993703}]);
+```
+
+## Typescript
+
+Typescript is supported out of the box. 
+
+```typescript
+const idToLookup: IOsmId = { type: "way", id: 163993703};
+const lookupParams: ILookupParams = { addressdetails: 1 };
+const results: ISearchResult[] = await NominatimJS.lookup([idToLookup], lookupParams);
+```
+
+
+## More examples 
 
 See examples folder in the repository
 

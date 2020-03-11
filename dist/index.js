@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -36,32 +47,53 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var superagent = require("superagent");
+var PLACES_TYPES = {
+    node: "N",
+    way: "W",
+    relation: "R"
+};
 var NominatimJS = /** @class */ (function () {
     function NominatimJS() {
     }
-    NominatimJS.search = function (params) {
+    NominatimJS.normalizeParams = function (params) {
+        return __assign({}, params, { format: params.format || 'json', "accept-language": params["accept-language"] || params.accept_language });
+    };
+    NominatimJS.stringifyOsmId = function (osmId) {
+        return "" + PLACES_TYPES[osmId.type] + osmId.id;
+    };
+    NominatimJS.search = function (rawParams) {
         return __awaiter(this, void 0, void 0, function () {
+            var params;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        params.format = params.format || 'json';
-                        // transform country codes array
-                        if (params.countryCodesArray) {
-                            params.countrycodes = params.countryCodesArray.join(',');
-                        }
-                        // transform accept-language
-                        if (params.accept_language) {
-                            params['accept-language'] = params.accept_language;
-                        }
+                        params = NominatimJS.normalizeParams(rawParams);
                         return [4 /*yield*/, superagent
-                                .get('https://nominatim.openstreetmap.org/search')
-                                .query(params)
+                                .get(NominatimJS.NOMINATIM_ENDPOINT + "search")
+                                .query(__assign({}, params, { countrycodes: params.countrycodes || (params.countryCodesArray ? params.countryCodesArray.join(',') : undefined) }))
                                 .then(function (res) { return res.body || []; })];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });
     };
+    NominatimJS.lookup = function (osmIds, rawParams) {
+        return __awaiter(this, void 0, void 0, function () {
+            var params;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        params = NominatimJS.normalizeParams(rawParams);
+                        return [4 /*yield*/, superagent
+                                .get(NominatimJS.NOMINATIM_ENDPOINT + "lookup")
+                                .query(__assign({}, params, { osm_ids: osmIds.map(NominatimJS.stringifyOsmId).join(',') }))
+                                .then(function (res) { return res.body || []; })];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    NominatimJS.NOMINATIM_ENDPOINT = 'https://nominatim.openstreetmap.org/';
     return NominatimJS;
 }());
 exports.NominatimJS = NominatimJS;
