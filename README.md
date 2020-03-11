@@ -1,3 +1,6 @@
+# REPO MOVED.
+Please refer to https://github.com/owsas/opensource for the latest version. Thank you. 
+
 # Nominatim-JS
 
 Unofficial JS SDK for the Nominatim Open Street Map service that allows geocoding and reverse geocoding
